@@ -1,21 +1,56 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+
+import { HomeScreen } from './src/pages/HomeScreen';
+import { MissingScreen } from './src/pages/MissingScreen';
+import { ProfileScreen } from './src/pages/ProfileScreen';
 
 export default function App() {
+  const { Navigator, Screen } = createBottomTabNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Dory junior</Text>
+    <>
+      <NavigationContainer>
+        <Navigator
+          screenOptions={{ headerShown: false, tabBarShowLabel: false }}
+        >
+          <Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Screen
+            name="Missing"
+            component={MissingScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="people" color={color} size={size} />
+              ),
+            }}
+          />
+          <Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons
+                  name="person-circle-outline"
+                  color={color}
+                  size={size}
+                />
+              ),
+            }}
+          />
+        </Navigator>
+      </NavigationContainer>
       <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
