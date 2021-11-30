@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { HomeScreen } from './src/pages/HomeScreen';
 import { MissingScreen } from './src/pages/MissingScreen';
 import { ProfileScreen } from './src/pages/ProfileScreen';
+import { Header } from './src/components/Header';
 
 export default function App() {
   const { Navigator, Screen } = createBottomTabNavigator();
@@ -15,7 +16,10 @@ export default function App() {
     <>
       <NavigationContainer>
         <Navigator
-          screenOptions={{ headerShown: false, tabBarShowLabel: false }}
+          screenOptions={{
+            tabBarShowLabel: false,
+            header: () => <Header />,
+          }}
         >
           <Screen
             name="Home"
@@ -50,7 +54,7 @@ export default function App() {
           />
         </Navigator>
       </NavigationContainer>
-      <StatusBar style="auto" />
+      <StatusBar style={'auto'} />
     </>
   );
 }
