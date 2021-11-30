@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { ReconnectedPeopleCounter } from '../components/ReconnectedPeopleCounter';
 
 export const HomeScreen: React.FC = () => {
   return (
     <View>
-      <Text>Home Screen</Text>
+      <ReconnectedPeopleCounter counter={53} />
     </View>
   );
 };

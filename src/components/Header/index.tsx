@@ -16,8 +16,9 @@ export const Header: React.FC<HeaderProps> = ({ showReturn = false }) => {
       </TouchableOpacity> */}
       <S.Logo
         source={{
-          uri: 'https://www.google.com/logos/doodles/2021/seasonal-holidays-2021-6753651837109324-s.png',
+          uri: 'https://i.imgur.com/t8Nirtw.png',
         }}
+        resizeMode={'contain'}
       />
       <TouchableOpacity>
         <Ionicons name="notifications" size={18} />
