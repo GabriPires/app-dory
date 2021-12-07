@@ -20,6 +20,8 @@ export const CounterBox = styled.View`
   justify-content: center;
   align-items: center;
 
+  border-radius: 8px;
+
   padding-right: 48px;
   padding-left: 48px;
   padding-bottom: 16px;

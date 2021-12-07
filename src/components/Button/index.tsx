@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonProps, Text, TouchableOpacity } from 'react-native';
+import { ButtonProps } from 'react-native';
 import * as S from './style';
 
 export const Button: React.FC<ButtonProps> = ({ title }) => {
