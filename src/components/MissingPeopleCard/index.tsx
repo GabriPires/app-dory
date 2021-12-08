@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Button } from '../Button';
+import { useNavigation } from '@react-navigation/native';
+
 import * as S from './styles';
 
 export type MissingPeopleCardProps = {
@@ -16,6 +18,13 @@ export const MissingPeopleCard: React.FC<MissingPeopleCardProps> = ({
   missingDate,
   name,
 }) => {
+  const navigation = useNavigation();
+
+  const navigateToDetails = (id: string): void => {
+    // @ts-expect-error err
+    navigation.navigate('MissingDetails', { id: id });
+  };
+
   return (
     <S.Container>
       <S.Avatar
@@ -30,7 +39,10 @@ export const MissingPeopleCard: React.FC<MissingPeopleCardProps> = ({
       <Text>{missingDate.toISOString()}</Text>
       <S.Title>Cidade</S.Title>
       <Text style={{ marginBottom: 8 }}>{location}</Text>
-      <Button title={'Mais Informações'} />
+      <Button
+        title={'Mais Informações'}
+        onPress={() => navigateToDetails('1')}
+      />
     </S.Container>
   );
 };

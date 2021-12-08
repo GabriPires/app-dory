@@ -7,7 +7,7 @@ export const Container = styled.View`
   position: relative;
 
   padding: 30px;
-  padding-top: 60px;
+  padding-top: 66px;
   background-color: #fff;
 `;
 
