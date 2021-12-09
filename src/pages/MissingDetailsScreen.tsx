@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from 'react-native';
 import { Header } from '../components/Header';
@@ -13,6 +13,8 @@ import {
 import { InformationTitle } from '../components/InformationContainer/style';
 import { Divider } from '../components/Divider';
 import { ScrollView } from 'react-native-gesture-handler';
+import api from '../services/api';
+import { MissingPeopleProps } from './MissingScreen';
 
 interface Params {
   id: string;
@@ -21,6 +23,14 @@ interface Params {
 export const MissingDetailsScreen: React.FC = () => {
   const route = useRoute();
   const routeParams = route.params as Params;
+
+  const [missing, setMissing] = useState<MissingPeopleProps>();
+
+  useEffect(() => {
+    api.get(`/desaparecido/${routeParams.id}`).then((response) => {
+      setMissing(response.data);
+    });
+  }, []);
 
   return (
     <ScrollView>
@@ -31,7 +41,7 @@ export const MissingDetailsScreen: React.FC = () => {
         }}
         style={{ marginTop: 16 }}
       />
-      <Title>Nome Sobrenome</Title>
+      <Title>{missing?.pessoa.nome}</Title>
       <Text style={{ textAlign: 'center', marginBottom: 24 }}>00 anos</Text>
       <Title>Sobre esta pessoa</Title>
       <Description>
@@ -50,7 +60,7 @@ export const MissingDetailsScreen: React.FC = () => {
           </View>
           <View>
             <InformationTitle>Etnia</InformationTitle>
-            <Text>Pardo</Text>
+            <Text>{missing?.pessoa.cutis}</Text>
           </View>
           <View>
             <InformationTitle>Cor dos olhos</InformationTitle>
@@ -60,7 +70,7 @@ export const MissingDetailsScreen: React.FC = () => {
         <InformationDetails>
           <View>
             <InformationTitle>Sexo</InformationTitle>
-            <Text>Masculino</Text>
+            <Text>{missing?.pessoa.sexo}</Text>
           </View>
           <View>
             <InformationTitle>Tipo sanguíneo</InformationTitle>

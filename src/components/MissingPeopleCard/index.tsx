@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as S from './styles';
 
 export type MissingPeopleCardProps = {
+  id: number;
   name: string;
   age: string | number;
   missingDate: Date;
@@ -13,6 +14,7 @@ export type MissingPeopleCardProps = {
 };
 
 export const MissingPeopleCard: React.FC<MissingPeopleCardProps> = ({
+  id,
   age,
   location,
   missingDate,
@@ -41,7 +43,7 @@ export const MissingPeopleCard: React.FC<MissingPeopleCardProps> = ({
       <Text style={{ marginBottom: 8 }}>{location}</Text>
       <Button
         title={'Mais Informações'}
-        onPress={() => navigateToDetails('1')}
+        onPress={() => navigateToDetails(id.toString())}
       />
     </S.Container>
   );
