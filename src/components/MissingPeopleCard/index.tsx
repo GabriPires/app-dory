@@ -2,6 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Button } from '../Button';
 import { useNavigation } from '@react-navigation/native';
+import { format } from 'date-fns';
 
 import * as S from './styles';
 
@@ -38,7 +39,7 @@ export const MissingPeopleCard: React.FC<MissingPeopleCardProps> = ({
       <S.MissingName>{name}</S.MissingName>
       <S.Age>{age} anos</S.Age>
       <S.Title>Desaparecido desde</S.Title>
-      <Text>{missingDate.toISOString()}</Text>
+      <Text>{format(missingDate, 'dd/MM/yyyy')}</Text>
       <S.Title>Cidade</S.Title>
       <Text style={{ marginBottom: 8 }}>{location}</Text>
       <Button

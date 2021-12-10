@@ -4,10 +4,12 @@ import { Box } from '../components/Box';
 import { MissingPeopleCard } from '../components/MissingPeopleCard';
 import { Title } from '../components/Title';
 import api from '../services/api';
+import { randomDate } from '../utils/randomDate';
 
 export type MissingPeopleProps = {
   codigo: number;
   encontrado: string;
+  idade: number;
   pessoa: {
     codigo: number;
     cpf: string;
@@ -37,9 +39,9 @@ export const MissingScreen: React.FC = ({}) => {
             <MissingPeopleCard
               key={people.codigo}
               id={people.codigo}
-              age={24}
+              age={people.idade}
               location={'Guaratinguetá - SP'}
-              missingDate={new Date()}
+              missingDate={randomDate(new Date(2012, 0, 1), new Date())}
               name={people.pessoa.nome}
             />
           ))
