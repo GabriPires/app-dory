@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Text, View } from 'react-native';
 import { Header } from '../components/Header';
 import { Avatar } from '../components/Avatar';
@@ -54,6 +54,7 @@ export type MissingPeopleProps = {
 export const MissingDetailsScreen: React.FC = () => {
   const route = useRoute();
   const routeParams = route.params as Params;
+  const navigation = useNavigation();
 
   const [missing, setMissing] = useState<MissingPeopleProps>();
 
@@ -62,6 +63,11 @@ export const MissingDetailsScreen: React.FC = () => {
       setMissing(response.data);
     });
   }, []);
+
+  const navigateToSeenScreen = (id: string): void => {
+    // @ts-expect-error err
+    navigation.navigate('HaveSeenMissingPeople', { id: id });
+  };
 
   return (
     <ScrollView>
@@ -79,7 +85,14 @@ export const MissingDetailsScreen: React.FC = () => {
       <Title>Sobre esta pessoa</Title>
       <Description>{missing?.maisInfos.descricao}</Description>
       <View style={{ width: '60%', alignSelf: 'center' }}>
-        <Button title={'Eu vi esta pessoa'} onPress={() => console.log('oi')} />
+        <Button
+          title={'Eu vi esta pessoa'}
+          onPress={() =>
+            navigateToSeenScreen(
+              missing ? missing?.desaparecido.codigo.toString() : '1',
+            )
+          }
+        />
       </View>
       <InformationContainer>
         <InformationDetails>
