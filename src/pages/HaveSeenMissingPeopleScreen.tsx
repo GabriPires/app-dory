@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { Header } from '../components/Header';
@@ -9,14 +9,31 @@ import { TextInputMask } from 'react-native-masked-text';
 import { RectButton } from 'react-native-gesture-handler';
 import { Divider } from '../components/Divider';
 import { Description } from '../components/Description';
+import api from '../services/api';
 
 interface Params {
   id: string;
 }
 
+type SeenForm = {
+  email: string;
+  name: string;
+  city: string;
+  local: string;
+  date: string;
+  clothes: string;
+  description: string;
+};
+
 const HaveSeenMissingPeopleScreen: React.FC = () => {
   const route = useRoute();
   const routeParams = route.params as Params;
+  const navigation = useNavigation();
+
+  const navigateToSeenScreen = (id: string): void => {
+    // @ts-expect-error err
+    navigation.navigate('HaveSeenMissingPeople', { id: id });
+  };
 
   const {
     control,
@@ -33,12 +50,35 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
       description: '',
     },
   });
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: SeenForm) => {
+    const splitedDate = data.date.split('-');
+    const formatedDate = new Date(
+      Number(splitedDate[2]),
+      Number(splitedDate[1]),
+      Number(splitedDate[0]),
+    );
+
+    api
+      .post('/casos', {
+        contatoQuemViu: data.email,
+        desaparecidoCodigo: routeParams.id,
+        emailQuemViu: data.email,
+        maisInfos: data.description,
+        nomeQuemViu: data.name,
+        ultimaLocalizacao: data.city,
+        ultimaRoupa: data.clothes,
+        ultimoHorario: formatedDate,
+        ultimoLugar: data.local,
+      })
+      .then(() => navigation.goBack())
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <ScrollView>
       <Header />
-      <Text>Vi esta pessoa {routeParams.id}</Text>
       <Title style={{ marginBottom: 16 }}>Você viu esta pessoa?</Title>
       <Title
         style={{ alignSelf: 'flex-start', marginLeft: 8, marginBottom: 8 }}
@@ -172,7 +212,7 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
@@ -204,7 +244,7 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
             paddingVertical: 10,
             borderRadius: 6,
           }}
-          onPress={() => console.log('a')}
+          onPress={() => navigateToSeenScreen(routeParams.id)}
         >
           <Text style={{ color: '#ffffff', fontWeight: '500', fontSize: 16 }}>
             Cancelar
