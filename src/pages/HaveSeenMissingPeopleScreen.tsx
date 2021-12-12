@@ -11,6 +11,7 @@ import { Divider } from '../components/Divider';
 import { Description } from '../components/Description';
 import api from '../services/api';
 import { showToast } from '../utils/showToast';
+import { isValid, parse } from 'date-fns';
 
 interface Params {
   id: string;
@@ -40,6 +41,7 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
     control,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
     defaultValues: {
       email: '',
@@ -52,12 +54,11 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
     },
   });
   const onSubmit = (data: SeenForm) => {
-    const splitedDate = data.date.split('-');
-    const formatedDate = new Date(
-      Number(splitedDate[2]),
-      Number(splitedDate[1]),
-      Number(splitedDate[0]),
-    );
+    const formatedDate = parse(data.date, 'P', new Date());
+
+    if (!isValid(formatedDate)) {
+      return setError('date', { message: 'Data inválida (Ex: 12/12/2021)' });
+    }
 
     api
       .post('/casos', {
@@ -187,7 +188,7 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
             placeholder={'Data que o viu'}
             type={'datetime'}
             options={{
-              format: 'DD-MM-YYYY',
+              format: 'DD/MM/YYYY',
             }}
             style={{
               backgroundColor: '#f7f9fa',
@@ -204,7 +205,7 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
         )}
         name={'date'}
       />
-      {errors.date && <InputError>Não pode estar vazio</InputError>}
+      {errors.date && <InputError>{errors.date.message}</InputError>}
       <Controller
         control={control}
         rules={{
