@@ -185,7 +185,7 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder={'Data que o viu'}
+            placeholder={'Data que o viu (ex: 12/12/2021)'}
             type={'datetime'}
             options={{
               format: 'DD/MM/YYYY',
