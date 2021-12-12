@@ -34,6 +34,6 @@ export const CounterBox = styled.View`
 
 export const Counter = styled.Text`
   font-weight: bold;
-  font-size: 24px;
+  font-size: 28px;
   color: #2c88d9;
 `;
