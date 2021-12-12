@@ -1,10 +1,11 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Image, ScrollView, View } from 'react-native';
 import { Description } from '../components/Description';
 import { ReconnectedPeopleCounter } from '../components/ReconnectedPeopleCounter';
 import { TitleUppercase } from '../components/Title';
 
 export const HomeScreen: React.FC = () => {
+  const FatherImage = require('../assets/undraw_fatherhood_7i19.png');
   return (
     <ScrollView>
       <ReconnectedPeopleCounter counter={53} />
@@ -15,6 +16,8 @@ export const HomeScreen: React.FC = () => {
         }}
       >
         <TitleUppercase>Sobre o projeto</TitleUppercase>
+
+        <Image source={FatherImage} style={{ width: 334, height: 237 }} />
 
         <Description>
           O projeto Dory proporciona ao usuário um sistema web para cadastrar

@@ -35,7 +35,7 @@ export const AppTabs = () => {
           ),
         }}
       />
-      <Screen
+      {/* <Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -43,7 +43,7 @@ export const AppTabs = () => {
             <Ionicons name="person-circle-outline" color={color} size={size} />
           ),
         }}
-      />
+      /> */}
     </Navigator>
   );
 };
