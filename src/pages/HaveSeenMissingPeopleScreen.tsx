@@ -258,7 +258,7 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
             paddingVertical: 10,
             borderRadius: 6,
           }}
-          onPress={() => navigateToSeenScreen(routeParams.id)}
+          onPress={() => navigation.goBack()}
         >
           <Text style={{ color: '#ffffff', fontWeight: '500', fontSize: 16 }}>
             Cancelar
