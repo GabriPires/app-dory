@@ -10,6 +10,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { Divider } from '../components/Divider';
 import { Description } from '../components/Description';
 import api from '../services/api';
+import { showToast } from '../utils/showToast';
 
 interface Params {
   id: string;
@@ -70,8 +71,20 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
         ultimoHorario: formatedDate,
         ultimoLugar: data.local,
       })
-      .then(() => navigation.goBack())
+      .then(() => {
+        showToast({
+          type: 'success',
+          title: 'Caso registrado com sucesso!',
+          message: 'Obrigado pela contribuição!',
+        });
+        navigation.goBack();
+      })
       .catch((err) => {
+        showToast({
+          type: 'error',
+          title: 'Ops, algo deu errado!',
+          message: 'Por favor revise os dados e tente novamente',
+        });
         console.log(err);
       });
   };
