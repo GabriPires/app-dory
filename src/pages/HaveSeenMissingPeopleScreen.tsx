@@ -12,6 +12,7 @@ import { Description } from '../components/Description';
 import api from '../services/api';
 import { showToast } from '../utils/showToast';
 import { isValid, parse } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface Params {
   id: string;
@@ -32,11 +33,6 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
   const routeParams = route.params as Params;
   const navigation = useNavigation();
 
-  const navigateToSeenScreen = (id: string): void => {
-    // @ts-expect-error err
-    navigation.navigate('HaveSeenMissingPeople', { id: id });
-  };
-
   const {
     control,
     handleSubmit,
@@ -54,7 +50,9 @@ const HaveSeenMissingPeopleScreen: React.FC = () => {
     },
   });
   const onSubmit = (data: SeenForm) => {
-    const formatedDate = parse(data.date, 'P', new Date());
+    const formatedDate = parse(data.date, 'dd/MM/yyyy', new Date(), {
+      locale: ptBR,
+    });
 
     if (!isValid(formatedDate)) {
       return setError('date', { message: 'Data inválida (Ex: 12/12/2021)' });
